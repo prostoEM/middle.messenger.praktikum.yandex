@@ -22,7 +22,7 @@ enum EVENTS  {
 }
 
 // Класс базового компонента (аналог Block из теории Практикума)
-export default abstract class BaseComponent<Props extends Record<string, any> = PropsAndChildren> {
+export abstract class BaseComponent<Props extends Record<string, any> = PropsAndChildren> {
 
     public static readonly EVENTS = EVENTS;
 
@@ -196,11 +196,21 @@ export default abstract class BaseComponent<Props extends Record<string, any> = 
     }
 
     // Метод для отделения children от пропсов (вырезаем из пропсов и возвращаем отдельно)
-    private _getChildren(props: Props) {
-        const children = (props.children !== undefined) ? props.children : {};
-        delete props.children;
-        return children;
+    _getChildren(propsAndChildren: Props) {
+        const children: Record<string, unknown>  = {};
+        const props:  Record<string, unknown>  = {};
+
+        Object.entries(propsAndChildren).forEach(([key, value]) => {
+            if (value instanceof BaseComponent) {
+                children[key] = value;
+            } else {
+                props[key] = value;
+            }
+        });
+
+        return { children, props };
     }
+
 
 
     private _makePropsProxy(props: Props) {
@@ -247,25 +257,25 @@ export default abstract class BaseComponent<Props extends Record<string, any> = 
     compile(template: string, props: Props) {
         const propsAndStubs: Record<string, unknown> = { ...props };
 
-        if (this.children) {
-            Object.entries(this.children).forEach(([key, child]) => {
-                propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
-            });
-        }
+        this.children && Object.entries(this.children ).forEach(([key, child]) => {
+            propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+        });
 
         const fragment = this._createDocumentElement(
-            'template',
+            "template"
         ) as HTMLTemplateElement;
 
         fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
 
-        if (this.children) {
-            Object.values(this.children).forEach((child) => {
-                const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-
-                stub?.replaceWith(child.getContent());
-            });
-        }
+        this.children && Object.values(this.children ).forEach((child) => {
+            const stub = fragment.content.querySelector<HTMLElement>(
+                `[data-id="${child._id}"]`
+            );
+            const content = child.getContent();
+            if (stub !== null && content !== null) {
+                stub.replaceWith(content);
+            }
+        });
 
         return fragment.content;
     }
