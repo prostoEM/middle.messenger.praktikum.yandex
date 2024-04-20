@@ -19,10 +19,17 @@ export default defineConfig({
           },
     },
 
-//@ts-ignore
+
     plugins:[
         checkerPlugin({ typescript: true }),
-        handlebars(),
+//@ts-ignore
+        handlebars({
+            partialDirectory: [
+                resolve(__dirname, 'src/components'),
+                resolve(__dirname, 'src/modules')
+            ],
+            context: {}
+        })
     ],
 
 

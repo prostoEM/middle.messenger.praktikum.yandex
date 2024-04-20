@@ -9,14 +9,19 @@
 @import url(components/Input/InputForm/InputForm.scss);
 @import url(components/LinkPage/LinkPage.scss);
 @import url(components/Input/InputDefault/InputDefault.scss);
+@import url(components/ZeroContent/ZeroContent.scss);
 
-//@import url(modules/ErrorContainer/ErrorContainer.scss);
 @import url(modules/ChatsContainer/ChatsContainer.scss);
 @import url(modules/ChatContainer/ChatContainer.scss);
 @import url(modules/ChatItem/ChatItem.scss);
 @import url(modules/ProfileForm/InfoItem/InfoItem.scss);
 @import url(modules/ProfileForm/ProfileDefaultForm/ProfileDefaultForm.scss);
+@import url(modules/FormAuth/FormAuth.scss);
 @import url(modules/ProfileForm/ProfileEditPasswordForm/ProfileEditPasswordForm.scss);
+
+@import url(pages/ErrorPage/ErrorPage.scss);
+@import url(pages/auth/auth.scss);
+
 
 body{
   font-family: "Inter", sans-serif;
