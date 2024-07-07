@@ -3,6 +3,7 @@ import  {BaseComponent, PropsAndChildren} from "../../utils/BaseComponent.ts";
 import template from './FormAuth.hbs?raw';
 import {InputForm} from "../../components/Input/InputForm";
 import {Button} from "../../components/Button/Button";
+import {getValidate, INPUT_NAME} from "../../utils/validate.ts";
 
 export class FormAuth extends BaseComponent {
 
@@ -38,5 +39,9 @@ export class FormAuth extends BaseComponent {
 
     render() {
         return this.compile(template, { ...this.propsAndChildren, });
+    }
+    componentDidMount() {
+        super.componentDidMount();
+        getValidate([INPUT_NAME.LOGIN, INPUT_NAME.PASSWORD])
     }
 }

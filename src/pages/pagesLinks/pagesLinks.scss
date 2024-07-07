@@ -1,0 +1,16 @@
+@import url(../../style.scss);
+
+.bodyPagesLinks{
+  display: flex;
+  height: 100vh;
+  align-items: center;
+}
+
+
+.containerPagesLinks{
+  margin: auto;
+display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+
