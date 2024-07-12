@@ -75,12 +75,7 @@ export class ProfileEditUserInfoForm extends BaseComponent {
 
     componentDidMount() {
         super.componentDidMount();
-        getValidate([
-            INPUT_NAME.EMAIL,
-            INPUT_NAME.LOGIN,
-            INPUT_NAME.FIRST_NAME,
-            INPUT_NAME.PHONE,
-        ])
+
         const applicantForm = document.getElementById('profileFormEditUserInfo')
         const handleSubbmitForm =  (event:SubmitEvent) => {
             event.preventDefault()

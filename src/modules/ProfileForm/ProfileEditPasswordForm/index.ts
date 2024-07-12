@@ -30,7 +30,7 @@ export class ProfileEditPasswordForm extends BaseComponent {
             title:'Новый пароль',
             type: 'password',
             placeholder: 'Введите новый пароль',
-            name: 'password',
+            name: 'edit_new_password',
             value:'123456'
         })
 
@@ -41,7 +41,7 @@ export class ProfileEditPasswordForm extends BaseComponent {
             title:'Новый пароль',
             type: 'password',
             placeholder: 'Введите еще раз новый пароль',
-            name: 'password',
+            name: 'repeat_password',
             value:'123456'
         })
 
@@ -69,6 +69,8 @@ export class ProfileEditPasswordForm extends BaseComponent {
         super.componentDidMount();
         getValidate([
             INPUT_NAME.PASSWORD,
+            INPUT_NAME.EDIT_NEW_PASSWORD,
+            INPUT_NAME.REPEAT_PASSWORD,
         ])
         const applicantForm = document.getElementById('profileFormEditPassword')
         const handleSubbmitForm =  (event:SubmitEvent) => {

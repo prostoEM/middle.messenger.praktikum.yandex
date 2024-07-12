@@ -13,15 +13,18 @@ export enum INPUT_NAME {
     SECOND_NAME = 'second_name',
     PHONE = 'phone',
     MESSAGE = 'message',
+    EDIT_NEW_PASSWORD ='edit_new_password'
 }
 
 export const getValidate = ( inputNames: INPUT_NAME[]) =>{
+    console.log('valid')
     inputNames.forEach((inputName)=>{
 
     const element : HTMLInputElement | null = document.querySelector(`[name="${inputName}"]`);
         const elementError: HTMLDivElement | null =document.querySelector(`[id="${inputName}Error"]`)
+
     if(  element === null || elementError === null) { return }
-    
+
         const events = ['blur', 'focus']
         const {validate, error} = FIELDS_FORM_VALIDATE[inputName]
 
@@ -59,8 +62,12 @@ const FIELDS_FORM_VALIDATE:Record<INPUT_NAME, ValidateFormType> = {
         validate: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,40}$/,
         error: 'Некорректный пароль',
     },
+    edit_new_password: {
+        validate: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,40}$/,
+        error: 'Некорректный пароль'
+    },
     repeat_password: {
-        validate: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
+        validate:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,40}$/,
         error: 'Некорректный пароль',
     },
     first_name: {
