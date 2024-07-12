@@ -19,7 +19,10 @@ export default defineConfig({
           },
     },
 
+    server:{
+        port: 3000,
 
+    },
     plugins:[
         checkerPlugin({ typescript: true }),
 //@ts-ignore
