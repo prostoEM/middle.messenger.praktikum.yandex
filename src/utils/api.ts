@@ -1,15 +1,24 @@
 
 
 
-const METHODS = {
-    GET: 'GET',
-    POST: 'POST',
-    PUT: 'PUT',
-    DELETE: 'DELETE',
+export enum METHODS  {
+    GET= 'GET',
+    POST= 'POST',
+    PUT='PUT',
+    DELETE=  'DELETE',
 };
 
 
-function queryStringify(data) {
+interface Options<T>{
+    method?:METHODS;
+    headers?: Record<string, string>;
+    data?:T;
+    timeout?: number;
+}
+
+type QueryData = Record<string, string>
+
+function queryStringify(data?:QueryData) {
     if (typeof data !== 'object') {
         throw new Error('Data must be object');
     }
@@ -20,28 +29,25 @@ function queryStringify(data) {
         return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
     }, '?');
 }
-export class HttpRequest {
-     get = (url: string, options = {}) => {
-        return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+export class HttpRequest<Data> {
+     get = (url: string, options:Options<Data>) => {
+        return this.request(url, { ...options, method: METHODS.GET });
     };
 
-     post = (url: string, options = {}) => {
-        return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+     post = (url: string, options:Options<Data>) => {
+        return this.request(url, { ...options, method: METHODS.POST });
     };
 
-     put = (url: string, options = {}) => {
-        return this.request(url, { ...options, method: METHODS.PUT },options.timeout);
+     put = (url: string, options:Options<Data> ) => {
+        return this.request(url, { ...options, method: METHODS.PUT });
     };
 
-     patch = (url: string, options = {}) => {
-        return this.request(url, { ...options, method: METHODS.PATCH },options.timeout);
+
+     delete = (url: string, options:Options<Data> ) => {
+        return this.request(url, { ...options, method: METHODS.DELETE });
     };
 
-     delete = (url: string, options = {}) => {
-        return this.request(url, { ...options, method: METHODS.DELETE },options.timeout);
-    };
-
-    request = (url: string, options) => {
+    request = (url: string, options:Options<Data>) => {
         const {
             method,
             headers = {},
@@ -49,7 +55,7 @@ export class HttpRequest {
           timeout = 5000,
         } = options;
 
-        const query = method === METHODS.GET ? queryStringify(data) : '';
+        const query = method === METHODS.GET ? queryStringify(data as QueryData) : '';
 
         return new Promise((resolve, reject) => {
             if (!method) {
@@ -90,7 +96,7 @@ export class HttpRequest {
             if (isGet || !data) {
                 xhr.send();
             } else {
-                xhr.send(data);
+                data && xhr.send(JSON.stringify(data));
             }
         });
     };
