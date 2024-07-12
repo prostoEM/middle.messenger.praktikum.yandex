@@ -1,5 +1,6 @@
 import { Button } from '../../../components/Button/Button';
 import { BaseComponent, PropsAndChildren } from '../../../utils/BaseComponent';
+import {INPUT_NAME, getValidate } from '../../../utils/validate';
 import { EditInfoItem } from '../EditInfoItem';
 import template from './profileEditUserInfoForm.hbs?raw';
 
@@ -70,5 +71,25 @@ export class ProfileEditUserInfoForm extends BaseComponent {
     }
     render() {
         return this.compile(template, { ...this.propsAndChildren });
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+        getValidate([
+            INPUT_NAME.EMAIL,
+            INPUT_NAME.LOGIN,
+            INPUT_NAME.FIRST_NAME,
+            INPUT_NAME.PHONE,
+        ])
+        const applicantForm = document.getElementById('profileFormEditUserInfo')
+        const handleSubbmitForm =  (event:SubmitEvent) => {
+            event.preventDefault()
+
+            const formData = Object.fromEntries(new FormData(event.target as HTMLFormElement).entries());
+            console.log(formData)
+
+        }
+        applicantForm?.addEventListener('submit', handleSubbmitForm)
+
     }
 }

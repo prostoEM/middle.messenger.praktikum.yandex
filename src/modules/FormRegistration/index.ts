@@ -3,6 +3,7 @@ import  {BaseComponent, PropsAndChildren} from "../../utils/BaseComponent.ts";
 import template from './FormRegistration.hbs?raw';
 import {InputForm} from "../../components/Input/InputForm";
 import {Button} from "../../components/Button/Button";
+import {INPUT_NAME, getValidate } from "../../utils/validate.ts";
 
 export class FormRegistration extends BaseComponent {
 
@@ -73,5 +74,27 @@ export class FormRegistration extends BaseComponent {
 
     render() {
         return this.compile(template, { ...this.propsAndChildren, });
+
+    }
+    componentDidMount() {
+        super.componentDidMount();
+        getValidate([
+            INPUT_NAME.EMAIL,
+            INPUT_NAME.SECOND_NAME,
+            INPUT_NAME.FIRST_NAME,
+            INPUT_NAME.PHONE,
+            INPUT_NAME.PASSWORD,
+            INPUT_NAME.REPEAT_PASSWORD
+        ])
+        const applicantForm = document.getElementById('formRegistration')
+        const handleSubbmitForm =  (event:SubmitEvent) => {
+            event.preventDefault()
+
+            const formData = Object.fromEntries(new FormData(event.target as HTMLFormElement).entries());
+            console.log(formData)
+
+        }
+        applicantForm?.addEventListener('submit', handleSubbmitForm)
+
     }
 }

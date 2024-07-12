@@ -43,5 +43,19 @@ export class FormAuth extends BaseComponent {
     componentDidMount() {
         super.componentDidMount();
         getValidate([INPUT_NAME.LOGIN, INPUT_NAME.PASSWORD])
+        const applicantForm = document.getElementById('formAuth')
+        const handleSubbmitForm =  (event:SubmitEvent) => {
+            event.preventDefault()
+
+            const formData = Object.fromEntries(new FormData(event.target as HTMLFormElement).entries());
+            console.log(formData)
+
+        }
+        applicantForm?.addEventListener('submit', handleSubbmitForm)
+
     }
 }
+
+
+
+
