@@ -20,9 +20,8 @@ export const getValidate = ( inputNames: INPUT_NAME[]) =>{
 
     const element : HTMLInputElement | null = document.querySelector(`[name="${inputName}"]`);
         const elementError: HTMLDivElement | null =document.querySelector(`[id="${inputName}Error"]`)
-    if(  element !== null && elementError !== null) {
-
-
+    if(  element === null || elementError === null) { return }
+    
         const events = ['blur', 'focus']
         const {validate, error} = FIELDS_FORM_VALIDATE[inputName]
 
@@ -37,14 +36,12 @@ export const getValidate = ( inputNames: INPUT_NAME[]) =>{
                 } else {
                     element.style.setProperty("border-width", "2px", "important");
                     element.style.borderColor = "red";
-
-
-                        elementError.textContent = error
-
+                    elementError.textContent = error
                 }
             })
         })
-    }}
+    
+    }
 )
 }
 
@@ -59,7 +56,7 @@ const FIELDS_FORM_VALIDATE:Record<INPUT_NAME, ValidateFormType> = {
         error: 'Некорректный email',
     },
     password: {
-        validate: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
+        validate: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,40}$/,
         error: 'Некорректный пароль',
     },
     repeat_password: {

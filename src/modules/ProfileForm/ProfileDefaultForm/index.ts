@@ -8,8 +8,6 @@ import template from './ProfileDefaultForm.hbs?raw';
 
 export class ProfileDefaultForm extends BaseComponent {
 
-
-
     constructor(propsAndChildren: PropsAndChildren) {
 
         const infoItemEmail = new InfoItem({
